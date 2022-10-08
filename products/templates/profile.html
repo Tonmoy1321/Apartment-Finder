@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section style="background-image: url('static/webuni/img/bg2.jpg'); background-repeat: no-repeat; height: 100%; background-attachment: fixed; ">
+<div class="container" style="padding-left: 35% ;">
+<h3>First Name: {{request.user.first_name}}</h3>
+<h3>Last Name: {{request.user.last_name}}</h3>
+<h3>Email: {{request.user.email}}</h3>
+<h3>Address: {{request.user.address}}</h3>
+<h3>Phone: {{request.user.phone}}</h3>
+</div>
+</section>
+{% endblock %}

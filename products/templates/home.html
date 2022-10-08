@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'cdn/static_cdn/admin/css/home.css' %}"/>
+    
+    <script>
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        function start() {
+            recognition.onresult = function (event) {
+                console.log(event);
+                var output = document.getElementById("output");
+                output.value = "";
+                for (var i = 0; i < event.results.length; i++) {
+                    output.value = output.value + event.results[i][0].transcript;
+                }
+                recognition.onspeechend = function () {
+                    recognition.stop();
+                    document.getElementById("tank").submit();
+                    console.log('Speech recognition has stopped.');
+                }
+            }
+            recognition.start();
+
+        }
+      $(function() {
+      $('#gif-click').hide();
+      $('#click').click(function() {
+      $('#click').hide();
+      $('#gif-click').show();
+      $('#pic-click').hide();
+    });
+
+    if($('#click').data("clicked", true)) {
+       $('#gif-click').click(function() {
+       $('#click').show();
+       $('#gif-click').hide();
+       $('#pic-click').show();
+      });
+    }
+
+  });
+
+  setInterval(function() {
+    $('input').each(function(){
+        if($(this).val() === ''){
+            $(this).css({
+                "width":$(this).width()+"px",
+                "height":$(this).height()+"px"
+            });
+            if(parseFloat($(this).css('font-size'))<=14){
+                $(this).animate({
+                    "font-size":10+"px"
+                });
+            }
+        }
+        else {
+            $(this).finish().clearQueue().css({
+                "font-size":14+"px"
+            });
+        }
+    });
+}, 100);
+
+</script>
+
+
+
+<!--<section class="hero-section set-bg" data-setbg="{% static 'webuni/img/bg5.jpg'%}">-->
+
+<section class="scrn hero-section set-bg">
+    <video autoplay loop class="video-bg" muted plays-inline>
+        <source src="media/water.mp4" type="video/mp4">
+    </video>
+<div><h1>Apartment Finder</h1></div>
+<div>
+<form action="{% url 'search'  %}" id="tank" method="post" >
+    {% csrf_token %}
+    <input type="text" name="output" id="output"  placeholder="Click the mic button..."> 
+    <img src="static/webuni/img/mic.png" height="41px"width="43px" type="button" id="button" onclick="start();">
+</form>
+<div class="hero-text text-black">
+    {% if request.user.is_authenticated %}
+    <h2>Welcome {{ request.user.username|capfirst }} </h2>
+    {% else %}
+    <h2>Easy way to find apartments.</h2>
+    {% endif %}
+</div>
+
+</section>
+                                
+
+{% endblock %}
+
+
+

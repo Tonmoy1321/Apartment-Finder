@@ -1,0 +1,37 @@
+  span.small{
+    font-size: smaller;
+  }
+  body{
+      background-color: rgb(153, 184, 204);
+  }
+
+    .card{
+     width: 21rem;
+     height: 521px;
+     background-image: linear-gradient(to right, rgb(30, 55, 77) , rgb(72, 104, 126) , white);
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     overflow: hidden;
+     justify-content: space-around;
+     margin: 10px;
+     padding: 1px;
+     border: 1px solid rgb(96, 199, 199);
+     border-radius: 0.25rem;
+     box-shadow: -1px 10px 30px -12px rgb(16, 20, 80);
+     z-index: 9999;
+  }
+
+    .card-img-top{
+      height: 250px;
+      overflow: hidden;
+  }
+
+  .card-text{
+    color: black;
+  }
+    .btn {
+    position: relative;
+    
+    background-color: rgb(41, 115, 117);
+  }

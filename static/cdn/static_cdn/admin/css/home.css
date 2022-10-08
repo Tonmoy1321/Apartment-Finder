@@ -1,0 +1,47 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body {
+text-align: center;
+}
+
+.video-bg {
+    position: absolute;
+    right: 0;
+    bottom: 1;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+#button{
+    float:inline-end ;
+}
+
+form {
+display: inline block;
+margin: auto;
+padding: 30px;
+width: 50%;
+font-size: 20px;
+}
+
+::placeholder {
+color: black;
+opacity: 1;
+}
+input {
+font-size:20px;
+width: 90%;
+}
+
+.searching-from{
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+}
+

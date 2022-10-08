@@ -1,0 +1,26 @@
+
+.css{
+    animation: animate 4s linear infinite;
+}
+@keyframes animate{
+    0%{
+        filter:hue-rotate();
+    }
+    100%{
+        filter: hue-rotate(360deg);
+    }
+}
+
+.foot {
+    width: 100%;
+    position: absolute;
+    padding-bottom: 15px;
+    padding-top: 28px;
+    background-color: #212F3C;
+  }
+
+  h5{
+    color: aliceblue;
+    text-align: center;
+  }
+

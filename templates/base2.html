@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .bcg{
+            background-color: #DDC6FC;
+         }
+    </style>
+    <title>EasyApartment</title>
+</head>
+<body>
+<nav class="navbar navbar-light">
+    <span>
+    <a class="navbar-brand" href="{% url 'home' %}">EasyApartment</a>
+    <a class="navbar-brand" href="{% url 'postad' %}">PostAD</a>
+    </span>
+    <span>
+        {% if request.user.is_superuser %}
+        <a class="navbar-brand" href="{% url 'admin:index' %}">Hi! {{ request.user }}</a>
+        {% elif request.user.is_authenticated %}
+        <a class="navbar-brand" href="{% url 'bookmarks' %}">Hi! {{ request.user }}</a>
+        {% else %}
+        <p class="hello-msg" href="#">Hi! <b>{{ request.user }}</b></p>
+        {% endif %}
+        <a class="navbar-brand" href="{% url 'mapview' %}"><h8>Apartments near you!</h8></a>
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="{% url 'logout' %}"><h6>Logout</h6></a>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'login' %}"><h6>Login</h6></a>
+        <a class="navbar-brand" href="{% url 'signup' %}"><h6>SignUp</h6></a>
+        {% endif %}
+    </span>
+</nav>
+<div class="p-3 mb-2 bg-gradient-dark text-white"></div>
+<div class="container">
+      {% block content %}
+      {% endblock %}
+</div>
+
+<style>
+    body {
+    background-size: cover;
+    }
+
+    .navbar-brand{
+      color: #fff;
+
+    }
+    .card-image-top {
+    height: 250px;
+    overflow: hidden;
+}
+   .hello-msg{
+   font-size: 18px;
+   margin-right: 20px;
+}
+   .font{
+   font-size:16px;
+}
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

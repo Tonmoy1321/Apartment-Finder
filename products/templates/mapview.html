@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+   
+  <div>    
+          <div>
+              <!-- Placing the map created in views.mapview with folium -->
+              {{ my_map|safe }}
+          </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<h3>Matching Advert for apartments:</h3>
+<h6>*Please reload the page after bookmarking an avdert!!*</h6> 
+{% else %}
+<h3>Matching Advert for apartments:</h3>
+{% endif %}
+<style>
+    span.small{
+    font-size: smaller;
+  }
+    .card{
+     width: 21rem;
+     height: 600px;
+     background-color: #fff;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     overflow: hidden;
+     justify-content: space-around;
+     margin: 0;
+     padding: 0;
+     border-radius: 0.25rem;
+     box-shadow: -1px 15px 30px -12px black;
+     z-index: 9999;
+  }
+
+    .card-img-top{
+      height: 250px;
+      overflow: hidden;
+  }
+    .btn btn-primary{
+    position: relative;
+  } 
+
+  #bookmarked {
+      background-color: red;
+  }
+
+  #floater {
+    position: fixed;
+    top: 100px;
+    right: 1px;
+    width: 100px;
+    height: 100px;
+    -webkit-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+    z-index: 1;
+}
+</style>
+
+<div id="floater">
+    <button class="btn btn-primary" onclick="window.location.reload();">Reload Page!</button>
+</div>
+<div class="row">
+    {% for product in products %}
+    <div class="col-4 py-3">
+        <div class="card text-center">
+            {% if product.picture %}
+             <img src="{{product.picture.url}}" class="card-img-top" style="height: 250px; overflow: hidden;"  alt="...">
+            {% else %}
+             <img src="{{product.image}}" class="card-img-top" style="height: 250px; overflow: hidden;"  alt="...">
+            {% endif%}
+  <div class="card-body">
+    <h6 class="card-title">{{product.Ad_Title}} with {{ product.bed_rooms }} beds and {{ product.bath_rooms }} baths.</h6>
+      {% if product.picture %}
+       <p class="card-text"><b>{{product.price}} Taka</b></p>
+      {% else %}
+       <p class="card-text"><b>৳{{product.price_Title}}</b></p>
+      {% endif%}
+      <p class="card-text"><b>Location: </b><span class="small">{{product.Address}}</span><b> Category: </b><span  class="small">{{product.listing_category | title}}</span></p>
+      <p class="card-text"><b>Bed Rooms: </b><span class="small">{{product.bed_rooms}}</span><b> Bath Rooms: </b><span class="small">{{product.bath_rooms}}</span></p>
+      {% if product.picture %}
+       <p class="card-text"><b>Call User</b></p>
+      {% else %}
+       <a href="{{product.property_url}}" target="_blank" class="btn btn-primary" id="center">View</a>
+      {% endif%}
+      {% if request.user.is_authenticated %}
+      {% if product.id not in fav %}
+      <a href="{% url 'add_bookmark' product.id %}" class="btn btn-primary" id="set-bookmark">Bookmark</a>
+      {% else %}
+      <a href="{% url 'add_bookmark' product.id %}"  class="btn btn-primary" id="bookmarked">Bookmarked!!</a>
+      {% endif %}
+      {% else %}
+      <a href="{% url 'login'%}" class="btn btn-primary" id="center">Bookmark</a>
+      {% endif %}
+  </div>
+</div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

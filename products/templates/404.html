@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'cdn/static_cdn/admin/css/home.css' %}"/>
+    
+    <script>
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        function start() {
+            recognition.onresult = function (event) {
+                console.log(event);
+                var output = document.getElementById("output");
+                output.value = "";
+                for (var i = 0; i < event.results.length; i++) {
+                    output.value = output.value + event.results[i][0].transcript;
+                }
+                recognition.onspeechend = function () {
+                    recognition.stop();
+                    document.getElementById("tank").submit();
+                    console.log('Speech recognition has stopped.');
+                }
+            }
+            recognition.start();
+
+        }
+      $(function() {
+      $('#gif-click').hide();
+      $('#click').click(function() {
+      $('#click').hide();
+      $('#gif-click').show();
+      $('#pic-click').hide();
+    });
+
+    if($('#click').data("clicked", true)) {
+       $('#gif-click').click(function() {
+       $('#click').show();
+       $('#gif-click').hide();
+       $('#pic-click').show();
+      });
+    }
+
+  });
+
+  setInterval(function() {
+    $('input').each(function(){
+        if($(this).val() === ''){
+            $(this).css({
+                "width":$(this).width()+"px",
+                "height":$(this).height()+"px"
+            });
+            if(parseFloat($(this).css('font-size'))<=14){
+                $(this).animate({
+                    "font-size":10+"px"
+                });
+            }
+        }
+        else {
+            $(this).finish().clearQueue().css({
+                "font-size":14+"px"
+            });
+        }
+    });
+}, 100);
+
+</script>
+<section class="container">
+    <form action="{% url 'search'  %}" id="tank" method="post" >
+        {% csrf_token %}
+        <input type="text" name="output" id="output"  placeholder="Search Again?....."> 
+    </form>
+    <h1>Ooopss!! Something went wrong!</h1>
+    <div class="gif">
+        <img src="https://media.giphy.com/media/H54feNXf6i4eAQubud/giphy.gif"><br><br>
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+    
+</section>
+
+
+
+{% endblock %}

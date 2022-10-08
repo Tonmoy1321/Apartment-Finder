@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section style="background-image: url('static/webuni/img/bg2.jpg'); background-repeat: no-repeat;background-attachment: fixed; ">
+<div style="text-align: center;"><h1>Post Your Advert</h1>
+</div>
+<div class="form-group container">
+<form class="Advert-post" method="post" enctype='multipart/form-data' style="padding-left: 15%; padding-right:10% ;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary">Post</button>
+    <!-- Rendering the advert form created in forms.py -->
+</form>
+</div>
+</section>
+
+{% endblock %}

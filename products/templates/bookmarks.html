@@ -1,0 +1,66 @@
+{% extends 'base2.html' %}
+{% block content %}
+<h3>Apartments You've bookmarked:</h3>
+<style>
+    span.small{
+    font-size: smaller;
+  }
+    .card{
+     width: 21rem;
+     height: 580px;
+     background-color: #fff;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     overflow: hidden;
+     justify-content: space-around;
+     margin: 0;
+     padding: 0;
+     border-radius: 0.25rem;
+     box-shadow: -1px 15px 30px -12px black;
+     z-index: 9999;
+  }
+
+    .card-img-top{
+      height: 250px;
+      overflow: hidden;
+  }
+    .btn btn-primary{
+    position: relative;
+  }
+
+  #bookmarked {
+      background-color: red;
+  }
+</style>
+<div class="row">
+    {% for product in bookmarks %}
+    <div class="col-4 py-3">
+        <div class="card text-center">
+            {% if product.picture %}
+             <img src="{{product.picture.url}}" class="card-img-top" style="height: 250px; overflow: hidden;"  alt="...">
+            {% else %}
+             <img src="{{product.image}}" class="card-img-top" style="height: 250px; overflow: hidden;"  alt="...">
+            {% endif%}
+  <div class="card-body">
+    <h6 class="card-title">{{product.Ad_Title}} with {{ product.bed_rooms }} beds and {{ product.bath_rooms }} baths.</h6>
+      {% if product.picture %}
+       <p class="card-text"><b>{{product.price}} Taka</b></p>
+      {% else %}
+       <p class="card-text"><b>৳{{product.price_Title}}</b></p>
+      {% endif%}
+      <p class="card-text"><b>Location: </b><span class="small">{{product.Address}}</span><b> Category: </b><span  class="small">{{product.listing_category | title}}</span></p>
+      <p class="card-text"><b>Bed Rooms: </b><span class="small">{{product.bed_rooms}}</span><b> Bath Rooms: </b><span class="small">{{product.bath_rooms}}</span></p>
+      {% if product.picture %}
+       <p class="card-text"><b>Call User</b></p>
+      {% else %}
+       <a href="{{product.property_url}}" target="_blank" class="btn btn-primary" id="center">View</a>
+      {% endif%}
+      <a href="{% url 'add_bookmark' product.id %}" class="btn btn-primary" id="bookmarked">Remove bookmark</a>
+      
+  </div>
+</div>
+    </div>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <script>
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        function start() {
+            recognition.onresult = function (event) {
+                console.log(event);
+                var output = document.getElementById("output");
+                output.value = "";
+                for (var i = 0; i < event.results.length; i++) {
+                    output.value = output.value + event.results[i][0].transcript;
+                }
+                recognition.onspeechend = function () {
+                    recognition.stop();
+                    document.getElementById("tank").submit();
+                    console.log('Speech recognition has stopped.');
+                }
+            }
+            recognition.start();
+
+        }
+       $(function() {
+    $('#gif-click').hide();
+    $('#click').click(function() {
+      $('#click').hide();
+      $('#gif-click').show();
+      $('#pic-click').hide();
+    });
+
+    if ($('#click').data("clicked", true)) {
+      $('#gif-click').click(function() {
+        $('#click').show();
+        $('#gif-click').hide();
+        $('#pic-click').show();
+      });
+    }
+
+  });
+
+  setInterval(function() {
+    $('input').each(function(){
+        if($(this).val() === ''){
+            $(this).css({
+                "width":$(this).width()+"px",
+                "height":$(this).height()+"px"
+            });
+            if(parseFloat($(this).css('font-size'))<=14){
+                $(this).animate({
+                    "font-size":10+"px"
+                });
+            }
+        }
+        else {
+            $(this).finish().clearQueue().css({
+                "font-size":14+"px"
+            });
+        }
+    });
+}, 100);
+
+    </script>
+    <style>
+       .button {
+         padding: 15px 25px;
+         font-size: 24px;
+         text-align: center;
+         cursor: pointer;
+         outline: none;
+         color: #fff;
+         background-color: #212F3C;
+         border: none;
+         border-radius: 10px;
+         box-shadow: 0 5px rgb(191, 175, 178);
+}
+
+.button:hover {background-color: #330e2e}
+
+.button:active {
+  background-color: #212F3C ;
+  box-shadow: 0 2px rgb(252, 71, 182);
+  transform: translateY(4px);
+}
+
+body {
+    text-align: center;
+}
+form {
+    display: inline-block;
+    margin: auto;
+    padding: 30px;
+    width: 67%;
+    font-size: 20px;
+}
+
+::placeholder {
+  color: black;
+  opacity: 1;
+}
+input {
+  font-size:20px;
+  width: 100%;
+}
+.button{
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+}
+
+.partners img{
+ width: 131px;
+}
+
+.searching-from{
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+}
+ </style>
+
+</head>
+
+<body>
+<h1>EasyApartment</h1>
+<form action="{% url 'search'  %}" id="tank" method="post" >
+    {% csrf_token %}
+    <input type="text" name="output" id="output"  placeholder=""> <br>
+    <input id="bStart" type="button" class="button" value="Voice Command" onclick="start();">
+</form>
+<div>
+    {% for message in messages %}
+    <p id="messages"><b>{{message}}</b></p>
+    {% endfor %}
+</div>
+<div class="searching-from">
+    <div class="partners">
+        <img src="/static/logoBproperty.png">
+        <img src="/static/rental-home-logo.png">
+    </div>
+
+
+</div>
+</body>
+
+{% endblock %}
+
